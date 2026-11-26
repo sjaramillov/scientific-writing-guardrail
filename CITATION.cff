@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "Please cite the version of this software that you used."
+title: "Scientific Writing Guardrail"
+type: software
+authors:
+  - name: "Scientific Writing Guardrail contributors"
+version: "0.1.0"
+date-released: 2026-11-26
+license: Apache-2.0
+repository-code: "https://github.com/sjaramillov/scientific-writing-guardrail"

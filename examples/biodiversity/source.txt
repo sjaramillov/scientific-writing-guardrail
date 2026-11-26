@@ -1,0 +1,5 @@
+Fictional inventory for a bilingual editorial exercise
+
+The teaching ledger lists 12 observation records across 3 plots. Each row represents one observation. Different rows can refer to the same organism.
+
+The ledger contains no species determinations. The number of species present cannot be inferred from these counts.

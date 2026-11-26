@@ -1,4 +1,4 @@
-"""Local editorial packet checks. Documented checks never issue a human approval."""
+"""Check declared source quotations, identifiers and literal expressions in EN/ES drafts."""
 import argparse
 import hashlib
 import json
@@ -8,9 +8,26 @@ import unicodedata
 from pathlib import Path
 
 
+CHECKER_VERSION = "0.1.0"
 LANGUAGES = ("en", "es")
 STATUSES = {"observed", "reported", "formal", "interpretation", "planned", "limitation"}
 NUMERIC_LITERAL = re.compile(r"[+−-]?\d+(?:[.,]\d+)?(?:/\d+)?(?:%|‰)?")
+# External notes accept bare DOIs in this conservative ASCII syntax. Other
+# citations and URLs can still be kept in the private evidence field.
+PUBLIC_DOI = re.compile(r"10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+")
+CHECKS = (
+    "frozen_source_sha256",
+    "verbatim_quotes_in_source",
+    "declared_claim_ids_in_both_editions",
+    "declared_anchors_in_quotes_and_editions",
+    "fixed_literal_equality",
+)
+NOT_ASSESSED = (
+    "completeness_of_the_claim_map",
+    "evidence_authenticity_or_support",
+    "semantic_equivalence_including_quantity_referents",
+    "grammar_and_reader_comprehension",
+)
 
 
 class PacketError(ValueError):
@@ -73,6 +90,17 @@ def prepare(raw):
     }
 
 
+def public_doi(claim):
+    if "public_doi" not in claim:
+        return None
+    value = required_text(claim, "public_doi")
+    if not PUBLIC_DOI.fullmatch(value) or any(
+        part in {".", "..", ""} for part in value.split("/")
+    ):
+        raise PacketError("Expected a bare public DOI, for example 10.1234/example.1")
+    return value
+
+
 def check(raw, packet):
     source = raw.decode("utf-8")
     if not isinstance(packet, dict) or type(packet.get("version")) is not int or packet["version"] != 1:
@@ -90,6 +118,7 @@ def check(raw, packet):
         if required_text(claim, "status") not in STATUSES:
             raise PacketError(f"{key}: unknown evidence status")
         required_text(claim, "evidence")
+        public_doi(claim)
         quote = required_text(claim, "quote")
         if quote not in source:
             issues.append(f"{key}: verbatim source passage missing.")
@@ -130,9 +159,11 @@ def check(raw, packet):
 
 
 def render_draft(packet, lang, packet_hash, with_notes):
-    title, evidence, assistance = {
-        "en": ("Draft for human review", "Evidence by claim", "Editorial assistance"),
-        "es": ("Borrador para revisión humana", "Evidencia por afirmación", "Asistencia editorial"),
+    title, evidence, review_note = {
+        "en": ("Draft for human review", "Evidence status assigned by the editor",
+               "Ask the editor for the evidence and editorial assistance record using the claim ID and packet hash."),
+        "es": ("Borrador para revisión humana", "Estado de la evidencia asignado por el editor",
+               "Solicita al editor la evidencia y el registro de asistencia editorial con el identificador de la afirmación y la huella del paquete."),
     }[lang]
     paragraphs = []
     for part in packet["versions"][lang]:
@@ -144,14 +175,25 @@ def render_draft(packet, lang, packet_hash, with_notes):
         else:
             paragraphs[-1] += " " + phrase
     if with_notes:
-        paragraphs.append(evidence + "\n" + "\n".join(
-            "[" + claim["id"] + "] " + claim["evidence"] for claim in packet["claims"]))
-        paragraphs.extend([assistance + "\n" + packet["assistance"], "SHA-256 · " + packet_hash])
+        spanish_status = {
+            "observed": "observado", "reported": "reportado", "formal": "formal",
+            "interpretation": "interpretación", "planned": "planificado", "limitation": "limitación",
+        }
+        notes = [evidence]
+        for claim in packet["claims"]:
+            status = claim["status"] if lang == "en" else spanish_status[claim["status"]]
+            line = f"[{claim['id']}] {status}"
+            doi = public_doi(claim)
+            if doi:
+                line += " · https://doi.org/" + doi
+            notes.append(line)
+        paragraphs.extend(["\n".join(notes), review_note, "SHA-256 · " + packet_hash])
     return "\n\n".join([title] + paragraphs)
 
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--version", action="version", version=CHECKER_VERSION)
     commands = parser.add_subparsers(dest="command", required=True)
     commands.add_parser("prepare", help="Start an incomplete EN/ES packet").add_argument("source", type=Path)
     validate = commands.add_parser("check", help="Check a packet against the original source bytes")
@@ -161,7 +203,8 @@ def main(argv=None):
     render.add_argument("source", type=Path)
     render.add_argument("packet", type=Path)
     render.add_argument("--language", required=True, choices=LANGUAGES)
-    render.add_argument("--with-notes", action="store_true", help="Include claim references, assistance and packet hash")
+    render.add_argument("--with-notes", action="store_true",
+                        help="Add claim IDs, assigned statuses, explicitly public DOIs and the packet hash")
     args = parser.parse_args(argv)
     try:
         raw = args.source.read_bytes()
@@ -178,11 +221,13 @@ def main(argv=None):
                 print(render_draft(packet, args.language, digest(packet_bytes), args.with_notes))
                 return 0
             result = {"result": "revise" if issues else "ready_for_human_review",
-                      "human_review": "pending", "source_sha256": digest(raw),
+                      "checker_version": CHECKER_VERSION, "checked": CHECKS,
+                      "not_assessed": NOT_ASSESSED, "human_review": "pending", "source_sha256": digest(raw),
                       "packet_sha256": digest(packet_bytes), "issues": issues}
             code = int(bool(issues))
     except (OSError, ValueError, RecursionError) as error:
-        result = {"result": "invalid_input", "human_review": "pending", "error": str(error)}
+        result = {"result": "invalid_input", "checker_version": CHECKER_VERSION, "checked": [],
+                  "not_assessed": NOT_ASSESSED, "human_review": "pending", "error": str(error)}
         code = 2
     stream = sys.stderr if args.command == "render" else sys.stdout
     print(json.dumps(result, indent=2, ensure_ascii=False), file=stream)

@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "source_sha256": "d477881e54b054350638065fc1d6f6960221d16b7e13193e11bc901470a683ff",
+  "audience": "Bilingual natural history editors checking what a teaching ledger counts.",
+  "assistance": "AI-assisted creation and translation of a synthetic teaching example. Reader and scientific review are pending.",
+  "claims": [
+    {
+      "id": "C1",
+      "status": "reported",
+      "evidence": "Teaching ledger, count paragraph, synthetic local evidence.",
+      "quote": "The teaching ledger lists 12 observation records across 3 plots. Each row represents one observation. Different rows can refer to the same organism.",
+      "anchors": [
+        {
+          "source": "12",
+          "en": "12",
+          "es": "12",
+          "invariant": true
+        },
+        {
+          "source": "3",
+          "en": "3",
+          "es": "3",
+          "invariant": true
+        },
+        {
+          "source": "observation records",
+          "en": "observation records",
+          "es": "registros de observación"
+        },
+        {
+          "source": "plots",
+          "en": "plots",
+          "es": "parcelas"
+        },
+        {
+          "source": "same organism",
+          "en": "same organism",
+          "es": "mismo organismo"
+        }
+      ]
+    },
+    {
+      "id": "C2",
+      "status": "limitation",
+      "evidence": "Teaching ledger, scope paragraph, synthetic local evidence.",
+      "quote": "The ledger contains no species determinations. The number of species present cannot be inferred from these counts.",
+      "anchors": [
+        {
+          "source": "species determinations",
+          "en": "species determinations",
+          "es": "determinaciones de especies"
+        },
+        {
+          "source": "cannot be inferred",
+          "en": "cannot be inferred",
+          "es": "no puede inferirse"
+        }
+      ]
+    }
+  ],
+  "versions": {
+    "en": [
+      {
+        "claim": "C1",
+        "text": "The fictional ledger lists 12 observation records across 3 plots. Each row describes an observation, and several rows may describe the same organism."
+      },
+      {
+        "claim": "C2",
+        "new_paragraph": true,
+        "text": "The ledger contains no species determinations. Species richness cannot be inferred from these counts."
+      }
+    ],
+    "es": [
+      {
+        "claim": "C1",
+        "text": "El inventario ficticio contiene 12 registros de observación distribuidos en 3 parcelas. Cada fila describe una observación y varias filas pueden referirse al mismo organismo."
+      },
+      {
+        "claim": "C2",
+        "new_paragraph": true,
+        "text": "El inventario carece de determinaciones de especies. La riqueza de especies no puede inferirse a partir de estos conteos."
+      }
+    ]
+  }
+}

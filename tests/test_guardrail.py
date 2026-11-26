@@ -31,6 +31,11 @@ class PacketChecks(unittest.TestCase):
         self.assertEqual(result["issues"], [])
         self.assertEqual(result["result"], "ready_for_human_review")
         self.assertEqual(result["human_review"], "pending")
+        self.assertEqual(result["checker_version"], "0.1.0")
+        self.assertIn("verbatim_quotes_in_source", result["checked"])
+        self.assertIn("evidence_authenticity_or_support", result["not_assessed"])
+        self.assertIn("semantic_equivalence_including_quantity_referents", result["not_assessed"])
+        self.assertIn("grammar_and_reader_comprehension", result["not_assessed"])
         self.assertEqual(result["source_sha256"], hashlib.sha256(self.raw).hexdigest())
         self.assertEqual(result["packet_sha256"], hashlib.sha256(PACKET.read_bytes()).hexdigest())
 
@@ -111,13 +116,57 @@ class PacketChecks(unittest.TestCase):
                 self.assertEqual(run.stdout, title + "\n\n" + body + "\n")
                 self.assertEqual(run.stderr, "")
 
-    def test_shareable_draft_retains_evidence_assistance_and_paragraphs(self):
+    def test_shareable_draft_uses_claim_markers_statuses_and_paragraphs(self):
         self.packet["versions"]["es"][1]["new_paragraph"] = True
         rendered = guardrail.render_draft(self.packet, "es", "digest", True)
         self.assertIn("[C1]\n\n", rendered)
-        self.assertIn(self.packet["assistance"], rendered)
-        self.assertIn(self.packet["claims"][0]["evidence"], rendered)
+        self.assertIn("[C2] reportado", rendered)
+        self.assertIn("registro de asistencia editorial", rendered)
+        self.assertNotIn(self.packet["assistance"], rendered)
+        self.assertNotIn(self.packet["claims"][0]["evidence"], rendered)
         self.assertIn("SHA-256 · digest", rendered)
+
+    def test_external_notes_only_publish_explicit_doi_in_both_languages(self):
+        self.packet["assistance"] = "Private working group: EXAMPLE-17"
+        self.packet["audience"] = "unpublished reviewer list"
+        self.packet["internal_notes"] = "fictional reviewer contact"
+        for claim in self.packet["claims"]:
+            claim["evidence"] = "/private/synthetic/worksheet and DOI 10.1234/private.1"
+            claim["internal_notes"] = "fictional embargo"
+        self.packet["claims"][0]["public_doi"] = "10.1234/example.1"
+        with tempfile.TemporaryDirectory() as private_dir:
+            packet = Path(private_dir) / "packet.json"
+            packet.write_text(json.dumps(self.packet), encoding="utf-8")
+            for lang in ("en", "es"):
+                with self.subTest(language=lang):
+                    run = subprocess.run(
+                        [sys.executable, str(ROOT / "guardrail.py"), "render", str(SOURCE), str(packet),
+                         "--language", lang, "--with-notes"], capture_output=True, text=True, check=True,
+                    )
+                    self.assertIn("[C1] formal · https://doi.org/10.1234/example.1", run.stdout)
+                    self.assertIn(hashlib.sha256(packet.read_bytes()).hexdigest(), run.stdout)
+                    self.assertEqual(run.stderr, "")
+                    for internal in ("EXAMPLE-17", "unpublished reviewer", "fictional", "/private/", "10.1234/private.1"):
+                        self.assertNotIn(internal, run.stdout)
+
+    def test_public_doi_rejects_free_text_urls_and_private_metadata(self):
+        for value in (None, "", "/private/private.txt", "https://doi.org/10.1234/name",
+                      "10.1234/public\nprivate notes", "10.1234/item?reviewer=private", "10.1234/../private"):
+            with self.subTest(value=value):
+                self.packet["claims"][0]["public_doi"] = value
+                with self.assertRaises(guardrail.PacketError):
+                    guardrail.check(self.raw, self.packet)
+
+    def test_v1_receipt_does_not_assess_which_noun_a_number_modifies(self):
+        raw = b"The register contains 12 records from 3 sites."
+        packet = guardrail.prepare(raw)
+        packet.update(audience="Bilingual reviewers", assistance="Fictional worked example")
+        packet["claims"][0].update(status="reported", evidence="Synthetic register",
+                                   anchors=[{"source": n, "en": n, "es": n} for n in ("12", "3")])
+        packet["versions"]["en"][0]["text"] = raw.decode()
+        packet["versions"]["es"][0]["text"] = "El registro contiene 3 registros de 12 sitios."
+        self.assertEqual(guardrail.check(raw, packet), [])
+        self.assertIn("semantic_equivalence_including_quantity_referents", guardrail.NOT_ASSESSED)
 
     def test_render_withholds_text_when_an_anchor_is_missing(self):
         self.packet["versions"]["en"][0]["text"] = "Only this sentence survives."
