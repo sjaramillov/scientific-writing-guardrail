@@ -31,7 +31,7 @@ class PacketChecks(unittest.TestCase):
         self.assertEqual(result["issues"], [])
         self.assertEqual(result["result"], "ready_for_human_review")
         self.assertEqual(result["human_review"], "pending")
-        self.assertEqual(result["checker_version"], "0.1.0")
+        self.assertEqual(result["checker_version"], guardrail.CHECKER_VERSION)
         self.assertIn("verbatim_quotes_in_source", result["checked"])
         self.assertIn("evidence_authenticity_or_support", result["not_assessed"])
         self.assertIn("semantic_equivalence_including_quantity_referents", result["not_assessed"])
