@@ -14,7 +14,7 @@ Un inventario ficticio cuenta **12 registros de observación en 3 parcelas**. Va
 
 [Probar los tres casos con el inventario](examples/biodiversity/README.md)
 
-## Qué haces tú y qué recibes
+## ¿Qué haces tú ? + ¿qué recibes ?
 
 ![Elige un párrafo y su evidencia, marca qué debe conservarse y redacta ambas versiones. El cotejo con el original genera un recibo. Si pasa, puedes exportar el texto en español o inglés para el lector.](docs/flujo-de-revision.svg)
 
