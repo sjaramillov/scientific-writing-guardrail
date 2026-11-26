@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="464" height="410" viewBox="0 0 464 410"
+     role="img" aria-labelledby="titulo descripcion" lang="es" xml:lang="es">
+  <title id="titulo">Cómo se revisa un pasaje</title>
+  <desc id="descripcion">Elige un párrafo y su evidencia. Marca qué debe conservarse y redacta las dos versiones. Compara ambas con el original. Obtienes un recibo con los hallazgos. Si pasa el cotejo, puedes exportar el texto en español o en inglés para el lector.</desc>
+  <rect width="464" height="410" rx="14" fill="#ffffff"/>
+  <g fill="none" stroke="#526c75" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M232 64v20m-5-5 5 5 5-5 M232 157v20m-5-5 5 5 5-5"/>
+    <path d="M232 239v18H114v52m-5-5 5 5 5-5 M232 257h118v52m-5-5 5 5 5-5"/>
+  </g>
+  <g stroke-width="1.5">
+    <rect x="27" y="9" width="410" height="55" rx="9" fill="#f2f6f7" stroke="#9cb0b6"/>
+    <rect x="27" y="88" width="410" height="69" rx="9" fill="#f2f6f7" stroke="#9cb0b6"/>
+    <rect x="27" y="181" width="410" height="58" rx="9" fill="#194b53" stroke="#194b53"/>
+    <rect x="9" y="313" width="210" height="88" rx="9" fill="#e8f4f1" stroke="#668d87"/>
+    <rect x="245" y="313" width="210" height="88" rx="9" fill="#e8f4f1" stroke="#668d87"/>
+  </g>
+  <rect x="279" y="269" width="142" height="25" fill="#ffffff"/>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="23" text-anchor="middle" fill="#18363c">
+    <text x="232" y="44">Elige un párrafo y su evidencia.</text>
+    <text x="232" y="118">Marca qué debe conservarse</text>
+    <text x="232" y="145">y redacta ambas versiones.</text>
+    <text x="232" y="218" font-weight="bold" fill="#ffffff">Coteja las versiones con el original.</text>
+    <text x="350" y="288" font-size="18">Si pasa el cotejo</text>
+    <text x="114" y="353">Recibo con</text>
+    <text x="114" y="381">los hallazgos</text>
+    <text x="350" y="340">Texto para el lector</text>
+    <text x="350" y="368">en español</text>
+    <text x="350" y="394">o en inglés</text>
+  </g>
+</svg>

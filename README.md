@@ -16,17 +16,13 @@ Un inventario ficticio cuenta **12 registros de observación en 3 parcelas**. Va
 
 ## Qué haces tú y qué recibes
 
-```mermaid
-flowchart TD
-    A["Elige un párrafo y su evidencia"] --> B["Marca qué debe conservarse y redacta ambas versiones"]
-    B --> C["Coteja las versiones con el original"]
-    C --> D["Recibo con los hallazgos"]
-    C -->|"Si pasa el cotejo"| E["Texto en español o inglés para el lector"]
-```
+![Elige un párrafo y su evidencia, marca qué debe conservarse y redacta ambas versiones. El cotejo con el original genera un recibo. Si pasa, puedes exportar el texto en español o inglés para el lector.](docs/flujo-de-revision.svg)
 
 A quien revise el texto puedes preguntarle **«¿Qué se contó y dónde?»** Una respuesta como «12 organismos» revela otra confusión, incluso si el programa aceptó el pasaje.
 
 ## Pruébalo en tu equipo
+
+**[Descarga el ZIP de la versión 0.2.0](https://github.com/sjaramillov/scientific-writing-guardrail/releases/download/v0.2.0/scientific-writing-guardrail-0.2.0.zip)**, descomprímelo y abre `LEEME.html` con doble clic. Podrás leer la guía visual en tu navegador sin conexión. Para ejecutar el ejemplo necesitas Python.
 
 Desde la carpeta del repositorio, con **Python 3.9 o posterior**, este comando muestra el borrador en español. Funciona sin conexión y usa únicamente la biblioteca estándar de Python.
 
@@ -48,6 +44,6 @@ Si aparece `ready_for_human_review`, el pasaje está listo para que alguien revi
 - **Quiero usar la herramienta.** Prepara los archivos, interpreta las alertas y exporta una copia para revisión. [Guía de uso](docs/uso.md)
 - **Mi resultado depende de una hipótesis.** Declara a qué objetos se aplica y comprueba qué ocurre si se pierde esa condición. [Propiedades y alcance de una afirmación](docs/claim-properties.md)
 
-La rama `main` contiene el comprobador de desarrollo `0.2.0.dev5`, compatible con los formatos de trabajo 1 a 6. La versión publicada `v0.1.0` utiliza el formato 1. [Descargar v0.1.0](https://github.com/sjaramillov/scientific-writing-guardrail/releases/tag/v0.1.0)
+La versión **0.2.0** admite los formatos de trabajo 1 a 6, incluidos los paquetes creados con la versión 0.1.0. Para citar esta edición, usa **Sebastian Jaramillo Valderrama (2026), Scientific Writing Guardrail, versión 0.2.0**. [Ficha de la versión](https://github.com/sjaramillov/scientific-writing-guardrail/releases/tag/v0.2.0)
 
 [Antecedentes](docs/related-work.md) · [Cómo citar el proyecto](CITATION.cff) · [Licencia Apache 2.0](LICENSE)

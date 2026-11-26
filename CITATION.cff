@@ -3,8 +3,10 @@ message: "Cita la versión del programa que utilizaste."
 title: "Scientific Writing Guardrail"
 type: software
 authors:
-  - name: "Scientific Writing Guardrail contributors"
-version: "0.1.0"
+  - given-names: "Sebastian"
+    family-names: "Jaramillo Valderrama"
+version: "0.2.0"
 date-released: 2026-11-26
 license: Apache-2.0
 repository-code: "https://github.com/sjaramillov/scientific-writing-guardrail"
+url: "https://github.com/sjaramillov/scientific-writing-guardrail/releases/tag/v0.2.0"

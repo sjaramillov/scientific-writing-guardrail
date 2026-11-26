@@ -17,7 +17,7 @@ from scope_context import is_disclaimed, is_unasserted_witness
 from scope_discourse import scope_segments, universal_restatements
 
 
-CHECKER_VERSION = "0.2.0.dev5"
+CHECKER_VERSION = "0.2.0"
 CONTEXT_TYPES = {"application": scope_application, "resumption": scope_resumption}
 SCOPE_TYPES = {**CONTEXT_TYPES, "relation": scope_relations, "dependency": scope_dependencies,
                "hypothesis": scope_hypotheses, "contrast": scope_contrasts, "finite_group": scope_groups}
