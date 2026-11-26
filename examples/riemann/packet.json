@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "source_sha256": "f4deb3393e0b3fef2f884ef7a702d6f067c0417120767a2febdbbeb1495cbd0f",
+  "audience": "Graduate scientists who want to distinguish a mathematical result from progress on its exposition.",
+  "assistance": "AI drafted this public teaching synopsis, its renderings and its claim map. Human scientific and bilingual reader review are pending.",
+  "claims": [
+    {
+      "id": "C1",
+      "status": "formal",
+      "quote": "Every nontrivial zero of the Riemann zeta function has real part exactly 1/2. The zeros at negative even integers are called trivial.",
+      "evidence": "Andrew Sutherland, What was verified, item 1 and the definition of RiemannHypothesis. https://math.mit.edu/~drew/grh/",
+      "anchors": [
+        {"source": "Every", "en": "every", "es": "cada"},
+        {"source": "nontrivial", "en": "nontrivial", "es": "no trivial"},
+        {"source": "Riemann zeta function", "en": "Riemann zeta function", "es": "función zeta de Riemann"},
+        {"source": "real part", "en": "real part", "es": "parte real"},
+        {"source": "exactly", "en": "exactly", "es": "exactamente"},
+        {"source": "1/2", "en": "1/2", "es": "1/2", "invariant": true},
+        {"source": "negative even integers", "en": "negative even integers", "es": "enteros pares negativos"}
+      ]
+    },
+    {
+      "id": "C2",
+      "status": "reported",
+      "quote": "On 21 November 2026, the Lean FRO and the Mathlib Initiative certified the formal statement and proof of the classical Riemann hypothesis.",
+      "evidence": "Lean FRO and Mathlib Initiative, joint statement on 21 November 2026, including checks 1–4. https://leanprover-community.github.io/blog/posts/riemann-hypothesis/",
+      "anchors": [
+        {"source": "21 November 2026", "en": "21 November 2026", "es": "21 de noviembre de 2026"},
+        {"source": "Lean FRO", "en": "Lean FRO", "es": "Lean FRO"},
+        {"source": "Mathlib Initiative", "en": "Mathlib Initiative", "es": "Mathlib Initiative"},
+        {"source": "formal statement", "en": "formal statement", "es": "enunciado formal"},
+        {"source": "proof", "en": "proof", "es": "demostración"},
+        {"source": "classical", "en": "classical", "es": "clásica"}
+      ]
+    },
+    {
+      "id": "C3",
+      "status": "limitation",
+      "quote": "Rubinstein’s working guide reduces its central inequality to thirteen hypotheses and leaves those hypotheses unproved within the guide.",
+      "evidence": "Michael Rubinstein, The proof explained for the Riemann zeta function, version 2, 22 November 2026. https://www.math.uwaterloo.ca/~mrubinst/alpoge_claude_grh/",
+      "anchors": [
+        {"source": "Rubinstein", "en": "Rubinstein", "es": "Rubinstein"},
+        {"source": "central inequality", "en": "central inequality", "es": "desigualdad central"},
+        {"source": "thirteen", "en": "thirteen", "es": "trece"},
+        {"source": "unproved", "en": "leaves their proofs open", "es": "deja pendientes sus demostraciones"}
+      ]
+    }
+  ],
+  "versions": {
+    "en": [
+      {"claim": "C1", "text": "The Riemann zeta function has zeros at the negative even integers. These are called trivial zeros. The theorem says that every nontrivial zero has real part exactly 1/2."},
+      {"claim": "C2", "text": "On 21 November 2026, the Lean FRO and the Mathlib Initiative certified both the formal statement of this classical result and its proof."},
+      {"claim": "C3", "text": "Writing down how the argument works is a further task. Rubinstein’s guide reduces its central inequality to thirteen hypotheses and leaves their proofs open within the guide."}
+    ],
+    "es": [
+      {"claim": "C1", "text": "La función zeta de Riemann tiene ceros en los enteros pares negativos. Se llaman ceros triviales. El teorema afirma que cada cero no trivial tiene parte real exactamente igual a 1/2."},
+      {"claim": "C2", "text": "El 21 de noviembre de 2026, la Lean FRO y la Mathlib Initiative certificaron el enunciado formal de esta hipótesis clásica y su demostración."},
+      {"claim": "C3", "text": "Explicar cómo funciona el argumento requiere otro paso. La guía de Rubinstein reduce su desigualdad central a trece hipótesis y deja pendientes sus demostraciones en ese texto."}
+    ]
+  }
+}

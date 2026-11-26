@@ -1,0 +1,12 @@
+Riemann hypothesis: editorial teaching synopsis, 26 November 2026.
+Audience: a graduate scientist reading about formal verification outside mathematics.
+Question: what was formally established, and what is still being explained?
+
+Every nontrivial zero of the Riemann zeta function has real part exactly 1/2. The zeros at negative even integers are called trivial.
+On 21 November 2026, the Lean FRO and the Mathlib Initiative certified the formal statement and proof of the classical Riemann hypothesis.
+Rubinstein’s working guide reduces its central inequality to thirteen hypotheses and leaves those hypotheses unproved within the guide.
+
+Sources for this original synopsis:
+Mathematical statement and terms: Andrew Sutherland, “What was verified,” item 1, https://math.mit.edu/~drew/grh/
+Verification announcement: https://leanprover-community.github.io/blog/posts/riemann-hypothesis/
+Scope of the guide: Michael Rubinstein, “The proof explained for the Riemann zeta function,” version 2, 22 November 2026, https://www.math.uwaterloo.ca/~mrubinst/alpoge_claude_grh/
